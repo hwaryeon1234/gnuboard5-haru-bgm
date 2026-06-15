@@ -1,0 +1,103 @@
+# 하루브금
+
+그누보드5용 **시간표 자동재생 BGM 플러그인**입니다.
+
+정해진 시간에 음악 파일이나 YouTube 링크를 재생할 수 있고, 관리자 공용 운영판과 순서표 모드를 통해 교회, 방송, 행사, 매장, 학교 등에서도 활용할 수 있습니다.
+
+## 주요 기능
+
+- 그누보드5 로그인 연동
+- 회원 전용 재생
+- 관리자 공용 운영판
+- 공통 시간표 / 개인 시간표
+- 특정 시간 동안 재생
+- 시간대 묶음 재생
+- 파일 음악 + YouTube 링크 혼합 재생
+- 순서표 모드
+- 회원별 사용 ON/OFF 관리
+- 재생 로그
+- 설치 점검
+
+## 추천 사용처
+
+- 개인 루틴 BGM
+- 교회 예배 전후 음악
+- 방송/행사 진행
+- 매장/학교 시간대 음악
+- 커뮤니티 회원 전용 음악 서비스
+
+## 설치 방법
+
+압축을 풀어 그누보드5 루트에 업로드합니다.
+
+```text
+/plugin/haru_bgm/
+```
+
+업로드 후 아래 주소로 접속합니다.
+
+```text
+/plugin/haru_bgm/
+```
+
+첫 접속 시 필요한 DB 테이블은 자동 생성됩니다.
+
+설치 상태는 아래 주소에서 확인할 수 있습니다.
+
+```text
+/plugin/haru_bgm/admin/health.php
+```
+
+## 사용 환경
+
+- 그누보드5.4 이상 권장
+- 그누보드5.5.x 권장
+- PHP 7.4 이상
+- PHP 8.0 이상 권장
+- MySQL 5.7 이상 또는 MariaDB 10.3 이상 권장
+
+## 폴더 권한
+
+음악 업로드를 위해 아래 폴더에 쓰기 권한이 필요합니다.
+
+```text
+/data/haru_bgm/
+```
+
+업로드가 되지 않을 경우 직접 생성 후 권한을 부여해 주세요.
+
+```bash
+mkdir -p data/haru_bgm
+chmod 707 data/haru_bgm
+```
+
+서버 환경에 따라 `755`로도 동작할 수 있지만, 업로드 오류가 있으면 그누보드 `data` 폴더와 동일하게 `707` 권한을 권장합니다.
+
+## 주요 주소
+
+```text
+/plugin/haru_bgm/                       모드 선택
+/plugin/haru_bgm/player.php             회원용 플레이어
+/plugin/haru_bgm/admin/index.php        관리자 홈
+/plugin/haru_bgm/admin/operation.php    관리자 공용 운영판
+/plugin/haru_bgm/admin/today.php        오늘 운영표
+/plugin/haru_bgm/admin/music_list.php   음악 관리
+/plugin/haru_bgm/admin/sequence_list.php 순서표 관리
+/plugin/haru_bgm/admin/member_access.php 회원 사용설정
+/plugin/haru_bgm/admin/health.php       설치 점검
+```
+
+## 참고사항
+
+브라우저 정책상 처음에는 사용자가 `음악 알림 켜기` 버튼을 눌러야 소리가 재생됩니다.
+
+YouTube 링크는 임베드가 허용된 영상만 정상 재생됩니다.  
+현장 사용 전에는 반드시 미리듣기 또는 테스트 재생을 권장합니다.
+
+## GitHub
+
+https://github.com/hwaryeon1234/gnuboard5-haru-bgm
+
+## 버전
+
+현재 버전: **v1.13**
