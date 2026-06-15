@@ -86,4 +86,5 @@ https://github.com/hwaryeon1234/gnuboard5-haru-bgm
 
 ## 버전
 
-현재 버전: **v1.13**
+현재 공개 버전: **v1.0**  
+내부 개발 기준: v1.13
