@@ -112,7 +112,7 @@
         ytPlayerPromise = loadYouTubeApi().then(function(){
             return new Promise(function(resolve){
                 ytPlayer = new YT.Player('hbYouTubePlayer', {
-                    height: '220',
+                    height: '360',
                     width: '100%',
                     videoId: '',
                     playerVars: { playsinline: 1, rel: 0, modestbranding: 1, controls: 1, origin: location.origin },
