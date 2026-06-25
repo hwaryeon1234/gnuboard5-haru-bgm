@@ -537,7 +537,7 @@
    회원 사용설정
    ------------------------------------------------------------ */
 .hb-access-row{
-    display:grid;grid-template-columns:minmax(150px,1fr) 100px minmax(180px,1.2fr) 140px auto;
+    display:grid;grid-template-columns:32px minmax(150px,1fr) 100px minmax(180px,1.2fr) 140px auto;
     gap:10px;align-items:center;padding:11px 14px;border-radius:var(--hb-radius-sm);
     background:var(--hb-surface);border:1px solid var(--hb-border);margin-bottom:6px;
 }
