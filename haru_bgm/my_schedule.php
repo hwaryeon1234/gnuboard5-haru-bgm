@@ -17,7 +17,7 @@ $music = hb_table('music');
 $mb_id = hb_escape($member['mb_id']);
 $res = sql_query("SELECT s.*, m.mf_title FROM `{$schedule}` s LEFT JOIN `{$music}` m ON s.mf_id = m.mf_id WHERE s.sc_scope='user' AND s.mb_id='{$mb_id}' ORDER BY s.sc_time ASC, s.sc_id DESC");
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov5">
 <div class="hb-wrap hb-radio">
     <section class="hb-page-head">
         <div>

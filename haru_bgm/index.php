@@ -21,7 +21,7 @@ $user_cnt = sql_fetch("SELECT COUNT(*) AS cnt FROM `{$schedule}` WHERE sc_scope=
 $block_global_cnt = sql_fetch("SELECT COUNT(*) AS cnt FROM `{$block}` WHERE bl_scope='global' AND bl_use=1", false);
 $block_user_cnt = sql_fetch("SELECT COUNT(*) AS cnt FROM `{$block}` WHERE bl_scope='user' AND mb_id='".hb_escape($member['mb_id'])."' AND bl_use=1", false);
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov5">
 
 <div class="hb-wrap hb-radio hb-mode-wrap">
     <section class="hb-hero hb-mode-hero">
@@ -100,11 +100,17 @@ $block_user_cnt = sql_fetch("SELECT COUNT(*) AS cnt FROM `{$block}` WHERE bl_sco
                 <em>정해진 시간대에 여러 곡 재생</em>
                 <small>작업/공부/휴식용</small>
             </a>
+            <a class="hb-mode-card" href="<?php echo HB_URL; ?>/my_music_list.php">
+                <span class="hb-mode-icon">🎵</span>
+                <strong>내 음악 보관함</strong>
+                <em>내가 등록한 파일/YouTube 링크 관리</em>
+                <small>내가 등록한 음악만 보여요</small>
+            </a>
             <?php if ($is_admin) { ?>
             <a class="hb-mode-card" href="<?php echo HB_URL; ?>/admin/music_list.php">
-                <span class="hb-mode-icon">🎵</span>
-                <strong>음악 보관함</strong>
-                <em>파일/YouTube 링크 관리</em>
+                <span class="hb-mode-icon">🎼</span>
+                <strong>전체 음악 보관함 (관리자)</strong>
+                <em>모든 회원의 음악 파일/YouTube 링크 관리</em>
                 <small>최대 100개 목록 표시</small>
             </a>
             <?php } ?>

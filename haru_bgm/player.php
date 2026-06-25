@@ -27,7 +27,7 @@ usort($today, function($a, $b) {
     return $a['start'] < $b['start'] ? -1 : 1;
 });
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov5">
 
 <div class="hb-wrap hb-radio" data-hb-url="<?php echo HB_URL; ?>">
     <section class="hb-radio-station">
@@ -66,6 +66,7 @@ usort($today, function($a, $b) {
         <div class="hb-radio-links">
             <a href="<?php echo HB_URL; ?>/my_schedule.php">내 시간표</a>
             <a href="<?php echo HB_URL; ?>/my_blocks.php">내 시간대</a>
+            <a href="<?php echo HB_URL; ?>/my_music_list.php">내 음악 보관함</a>
             <a href="<?php echo HB_URL; ?>/index.php">모드 선택</a>
             <?php if ($is_admin) { ?><a href="<?php echo HB_URL; ?>/admin/index.php">관리자</a><?php } ?>
         </div>
@@ -134,7 +135,7 @@ window.HARU_BGM = {
     memberId: '<?php echo hb_e($member['mb_id']); ?>'
 };
 </script>
-<script src="<?php echo HB_URL; ?>/assets/haru_bgm.js?ver=20260625-radiov3"></script>
+<script src="<?php echo HB_URL; ?>/assets/haru_bgm.js?ver=20260625-radiov5"></script>
 <?php
 include_once(G5_PATH.'/tail.php');
 ?>

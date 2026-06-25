@@ -27,9 +27,9 @@ unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
 $row = $hb_haru_form_row_backup;
 unset($hb_haru_form_row_backup);
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov5">
 <div class="hb-wrap hb-radio">
-    <section class="hb-page-head"><div><p class="hb-kicker">MY PLAYLIST</p><h1><?php echo $bl_id ? '내 시간대 수정' : '내 시간대 추가'; ?></h1><p>이 설정은 내 계정에서만 재생됩니다.</p></div><a class="hb-btn" href="<?php echo HB_URL; ?>/my_blocks.php">목록으로</a></section>
+    <section class="hb-page-head"><div><p class="hb-kicker">MY PLAYLIST</p><h1><?php echo $bl_id ? '내 시간대 수정' : '내 시간대 추가'; ?></h1><p>이 설정은 내 계정에서만 재생됩니다.</p></div><div class="hb-actions"><a class="hb-btn" href="<?php echo HB_URL; ?>/my_music_list.php">내 음악 보관함</a><a class="hb-btn" href="<?php echo HB_URL; ?>/my_blocks.php">목록으로</a></div></section>
     <form class="hb-card hb-form" method="post" action="<?php echo HB_URL; ?>/my_block_update.php">
         <input type="hidden" name="bl_id" value="<?php echo (int)$row['bl_id']; ?>">
         <label>시간대 제목<input type="text" name="bl_title" value="<?php echo hb_e($row['bl_title']); ?>" placeholder="예: 집중 작업 BGM" required></label>

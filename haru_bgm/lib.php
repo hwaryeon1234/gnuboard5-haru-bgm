@@ -356,7 +356,10 @@ function hb_find_or_create_youtube_music($url, $title='', $volume=80, $type='mus
     if (!$yt_id) return 0;
     $music = hb_table('music');
     $yt_sql = hb_escape($yt_id);
-    $found = sql_fetch("SELECT mf_id FROM `{$music}` WHERE mf_source='youtube' AND mf_youtube_id='{$yt_sql}' LIMIT 1", false);
+    $mb_id_for_check = hb_escape($mb_id);
+    // 같은 영상이라도 등록자(mb_id)가 다르면 별개의 음악으로 취급합니다.
+    // (회원이 관리자 소유 음악을 가리키게 되는 것을 방지)
+    $found = sql_fetch("SELECT mf_id FROM `{$music}` WHERE mf_source='youtube' AND mf_youtube_id='{$yt_sql}' AND mb_id='{$mb_id_for_check}' LIMIT 1", false);
     if ($found && isset($found['mf_id']) && (int)$found['mf_id'] > 0) return (int)$found['mf_id'];
     $url = trim((string)$url);
     $title = trim((string)$title);
@@ -443,10 +446,17 @@ function hb_schedule_common_query($only_today=false) {
 }
 
 function hb_get_music_options($selected=0) {
+    global $is_admin, $member;
     $music = hb_table('music');
     $selected = (int)$selected;
     $html = '';
-    $res = sql_query("SELECT * FROM `{$music}` WHERE mf_use = 1 ORDER BY mf_id DESC");
+    if ($is_admin) {
+        $res = sql_query("SELECT * FROM `{$music}` WHERE mf_use = 1 ORDER BY mf_id DESC");
+    } else {
+        // 일반 회원에게는 본인이 등록한 음악만 선택지로 노출합니다.
+        $mb_id = hb_escape(isset($member['mb_id']) ? $member['mb_id'] : '');
+        $res = sql_query("SELECT * FROM `{$music}` WHERE mf_use = 1 AND mb_id = '{$mb_id}' ORDER BY mf_id DESC");
+    }
     while ($row = sql_fetch_array($res)) {
         $sel = ((int)$row['mf_id'] === $selected) ? ' selected' : '';
         $label = hb_music_source_label($row);
@@ -871,26 +881,28 @@ function hb_set_member_bgm_enabled($mb_id, $enabled, $memo='', $admin_id='') {
 }
 
 function hb_require_member_bgm_enabled() {
-    global $member, $is_admin, $g5;
+    global $member, $is_admin;
     if ($is_admin) return true;
     $mb_id = isset($member['mb_id']) ? $member['mb_id'] : '';
     if (hb_is_member_bgm_enabled($mb_id)) return true;
     if (defined('HB_JSON_MODE') && HB_JSON_MODE) {
         hb_json_exit(array('ok'=>false, 'message'=>'member_bgm_disabled', 'notice'=>'운영자가 이 계정의 하루브금 회원용 사용을 꺼두었습니다.'));
     }
-    $g5['title'] = '하루브금 사용 제한';
-    $hb_haru_head_row_was_set = array_key_exists('row', get_defined_vars());
-$hb_haru_head_row_backup = $hb_haru_head_row_was_set ? $row : null;
-include_once(G5_PATH.'/head.php');
-if ($hb_haru_head_row_was_set) {
-    $row = $hb_haru_head_row_backup;
-} else {
-    unset($row);
-}
-unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
-    echo '<link rel="stylesheet" href="'.HB_URL.'/assets/haru_bgm.css?ver=20260625-radiov3">';
-    echo '<div class="hb-wrap"><section class="hb-card hb-empty"><div class="hb-empty-icon">🔒</div><strong>하루브금 사용이 꺼져 있습니다</strong><p>이 계정은 운영자 설정에 따라 회원용 하루브금 화면을 사용할 수 없습니다.</p><p class="hb-muted-mini">필요하면 사이트 운영자에게 사용 허용을 요청하세요.</p><div class="hb-actions hb-actions-center"><a class="hb-btn" href="'.G5_URL.'">사이트 홈으로</a></div></section></div>';
-    include_once(G5_PATH.'/tail.php');
+    // 그누보드 테마(head.php/tail.php)는 메인 페이지 흐름에서만 필요한 변수가
+    // 준비되는 경우가 있어, 플러그인 페이지에서 직접 부르면 테마에 따라
+    // 치명적 오류(Fatal error)가 날 수 있습니다. 차단 안내는 테마에 의존하지
+    // 않는 독립된 HTML 문서로 안전하게 출력합니다.
+    $home_url = defined('G5_URL') ? G5_URL : '/';
+    $hb_css_url = defined('HB_URL') ? HB_URL.'/assets/haru_bgm.css?ver=20260625-radiov5' : '';
+    echo '<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">';
+    echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
+    echo '<title>하루브금 사용 제한</title>';
+    if ($hb_css_url !== '') echo '<link rel="stylesheet" href="'.hb_e($hb_css_url).'">';
+    echo '<style>body{margin:0;background:#fffaf7;display:flex;min-height:100vh;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}</style>';
+    echo '</head><body>';
+    echo '<div class="hb-wrap hb-radio" style="max-width:480px;margin:0;padding:0">';
+    echo '<section class="hb-card hb-empty"><div class="hb-empty-icon">🔒</div><strong>하루브금 사용이 꺼져 있습니다</strong><p>이 계정은 운영자 설정에 따라 회원용 하루브금 화면을 사용할 수 없습니다.</p><p class="hb-muted-mini">필요하면 사이트 운영자에게 사용 허용을 요청하세요.</p><div class="hb-actions hb-actions-center"><a class="hb-btn" href="'.hb_e($home_url).'">사이트 홈으로</a></div></section>';
+    echo '</div></body></html>';
     exit;
 }
 
