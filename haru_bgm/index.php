@@ -21,7 +21,7 @@ $user_cnt = sql_fetch("SELECT COUNT(*) AS cnt FROM `{$schedule}` WHERE sc_scope=
 $block_global_cnt = sql_fetch("SELECT COUNT(*) AS cnt FROM `{$block}` WHERE bl_scope='global' AND bl_use=1", false);
 $block_user_cnt = sql_fetch("SELECT COUNT(*) AS cnt FROM `{$block}` WHERE bl_scope='user' AND mb_id='".hb_escape($member['mb_id'])."' AND bl_use=1", false);
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
 
 <div class="hb-wrap hb-radio hb-mode-wrap">
     <section class="hb-hero hb-mode-hero">

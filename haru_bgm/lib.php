@@ -407,10 +407,16 @@ function hb_ip() {
 }
 
 function hb_schedule_query($mb_id, $only_today=false) {
+    global $is_admin;
     $schedule = hb_table('schedule');
     $music = hb_table('music');
     $mb_id = hb_escape($mb_id);
-    $where = "s.sc_use = 1 AND m.mf_use = 1 AND (s.sc_scope = 'global' OR (s.sc_scope = 'user' AND s.mb_id = '{$mb_id}'))";
+    if ($is_admin) {
+        $where = "s.sc_use = 1 AND m.mf_use = 1 AND (s.sc_scope = 'global' OR (s.sc_scope = 'user' AND s.mb_id = '{$mb_id}'))";
+    } else {
+        // 공용(전체 공개) 시간표는 관리자 전용입니다. 일반 회원에게는 본인 개인 시간표만 노출됩니다.
+        $where = "s.sc_use = 1 AND m.mf_use = 1 AND s.sc_scope = 'user' AND s.mb_id = '{$mb_id}'";
+    }
     if ($only_today) {
         $w = date('w');
         $today = G5_TIME_YMD;
@@ -570,9 +576,15 @@ function hb_play_mode_label($mode) {
 }
 
 function hb_block_query($mb_id, $only_today=false) {
+    global $is_admin;
     $block = hb_table('block');
     $mb_id = hb_escape($mb_id);
-    $where = "b.bl_use = 1 AND (b.bl_scope = 'global' OR (b.bl_scope = 'user' AND b.mb_id = '{$mb_id}'))";
+    if ($is_admin) {
+        $where = "b.bl_use = 1 AND (b.bl_scope = 'global' OR (b.bl_scope = 'user' AND b.mb_id = '{$mb_id}'))";
+    } else {
+        // 공용(전체 공개) 시간대 묶음은 관리자 전용입니다. 일반 회원에게는 본인 개인 시간대만 노출됩니다.
+        $where = "b.bl_use = 1 AND b.bl_scope = 'user' AND b.mb_id = '{$mb_id}'";
+    }
     if ($only_today) {
         $w = date('w');
         $today = G5_TIME_YMD;
@@ -876,7 +888,7 @@ if ($hb_haru_head_row_was_set) {
     unset($row);
 }
 unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
-    echo '<link rel="stylesheet" href="'.HB_URL.'/assets/haru_bgm.css?ver=20260625-radiov2">';
+    echo '<link rel="stylesheet" href="'.HB_URL.'/assets/haru_bgm.css?ver=20260625-radiov3">';
     echo '<div class="hb-wrap"><section class="hb-card hb-empty"><div class="hb-empty-icon">🔒</div><strong>하루브금 사용이 꺼져 있습니다</strong><p>이 계정은 운영자 설정에 따라 회원용 하루브금 화면을 사용할 수 없습니다.</p><p class="hb-muted-mini">필요하면 사이트 운영자에게 사용 허용을 요청하세요.</p><div class="hb-actions hb-actions-center"><a class="hb-btn" href="'.G5_URL.'">사이트 홈으로</a></div></section></div>';
     include_once(G5_PATH.'/tail.php');
     exit;

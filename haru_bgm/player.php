@@ -27,7 +27,7 @@ usort($today, function($a, $b) {
     return $a['start'] < $b['start'] ? -1 : 1;
 });
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
 
 <div class="hb-wrap hb-radio" data-hb-url="<?php echo HB_URL; ?>">
     <section class="hb-radio-station">
@@ -83,7 +83,7 @@ usort($today, function($a, $b) {
             <div class="hb-empty">
                 <div class="hb-empty-icon">🎧</div>
                 <strong>오늘 재생될 음악이 없어요</strong>
-                <p>관리자 공통 시간표나 내 개인 시간표를 등록하면 여기에 표시됩니다.</p>
+                <p>내 시간표나 내 시간대 묶음을 등록하면 여기에 표시됩니다.</p>
                 <a class="hb-btn hb-btn-small" href="<?php echo HB_URL; ?>/my_schedule.php">내 시간표 만들기</a>
             </div>
         <?php } else { ?>
@@ -134,7 +134,7 @@ window.HARU_BGM = {
     memberId: '<?php echo hb_e($member['mb_id']); ?>'
 };
 </script>
-<script src="<?php echo HB_URL; ?>/assets/haru_bgm.js?ver=20260625-radiov2"></script>
+<script src="<?php echo HB_URL; ?>/assets/haru_bgm.js?ver=20260625-radiov3"></script>
 <?php
 include_once(G5_PATH.'/tail.php');
 ?>

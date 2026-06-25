@@ -30,7 +30,7 @@ unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
 $row = $hb_haru_form_row_backup;
 unset($hb_haru_form_row_backup);
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
 <div class="hb-wrap hb-radio">
     <section class="hb-page-head">
         <div>

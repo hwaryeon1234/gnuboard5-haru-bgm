@@ -17,13 +17,13 @@ $music = hb_table('music');
 $mb_id = hb_escape($member['mb_id']);
 $res = sql_query("SELECT s.*, m.mf_title FROM `{$schedule}` s LEFT JOIN `{$music}` m ON s.mf_id = m.mf_id WHERE s.sc_scope='user' AND s.mb_id='{$mb_id}' ORDER BY s.sc_time ASC, s.sc_id DESC");
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
 <div class="hb-wrap hb-radio">
     <section class="hb-page-head">
         <div>
             <p class="hb-kicker">MY ROUTINE</p>
             <h1>내 시간표</h1>
-            <p>개인 시간표는 나에게만 적용됩니다. 공통 시간표와 합쳐져서 오늘 목록에 보여요.</p>
+            <p>개인 시간표는 나에게만 적용됩니다. 내 BGM 화면에서 등록한 시간에 맞춰 자동으로 재생돼요.</p>
         </div>
         <div class="hb-actions">
             <a class="hb-btn" href="<?php echo HB_URL; ?>/index.php">하루브금 홈</a>

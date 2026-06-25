@@ -15,7 +15,7 @@ $block = hb_table('block');
 $mb_id = hb_escape($member['mb_id']);
 $res = sql_query("SELECT * FROM `{$block}` WHERE bl_scope='user' AND mb_id='{$mb_id}' ORDER BY bl_start_time ASC, bl_id DESC");
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
 <div class="hb-wrap hb-radio">
     <section class="hb-page-head"><div><p class="hb-kicker">MY PLAYLIST</p><h1>내 시간대 묶음</h1><p>특정 시간대 안에서 여러 음악을 내 브라우저에서만 이어서 재생합니다.</p></div><div class="hb-actions"><a class="hb-btn" href="<?php echo HB_URL; ?>/index.php">하루브금 홈</a><a class="hb-btn" href="<?php echo HB_URL; ?>/my_schedule.php">내 시간표</a><a class="hb-btn hb-btn-primary" href="<?php echo HB_URL; ?>/my_block_form.php">+ 시간대 추가</a></div></section>
     <section class="hb-card"><div class="hb-table-wrap"><table class="hb-table"><thead><tr><th>시간대</th><th>제목</th><th>곡 수</th><th>방식</th><th>요일</th><th>기간</th><th>상태</th><th>관리</th></tr></thead><tbody>
