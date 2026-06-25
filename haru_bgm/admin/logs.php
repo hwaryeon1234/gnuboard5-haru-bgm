@@ -19,7 +19,7 @@ $log = hb_table('play_log');
 $music = hb_table('music');
 $res = sql_query("SELECT l.*, m.mf_title, m.mf_source, m.mf_youtube_id FROM `{$log}` l LEFT JOIN `{$music}` m ON l.mf_id=m.mf_id WHERE {$where} ORDER BY l.pl_id DESC LIMIT 500", false);
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
 <div class="hb-app"><?php echo hb_nav_admin(); ?><main class="hb-app-main"><div class="hb-wrap">
     <section class="hb-page-head"><div><p class="hb-kicker">ADMIN</p><h1>재생 로그</h1><p>자동재생, 미리듣기, 수동 진행의 성공/실패를 추적합니다.</p></div><a class="hb-btn" href="<?php echo HB_URL; ?>/admin/index.php">관리자 홈</a></section>
     <section class="hb-card hb-log-filter">

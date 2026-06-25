@@ -21,7 +21,7 @@ foreach ($today as $entry) {
     else $block_count++;
 }
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
 
 <div class="hb-app"><?php echo hb_nav_admin(); ?><main class="hb-app-main"><div class="hb-wrap hb-operation-page" data-hb-url="<?php echo HB_URL; ?>" data-hb-mode="admin-operation">
     <section class="hb-page-head hb-operation-head">
@@ -171,7 +171,7 @@ window.HARU_BGM = {
     storagePrefix: 'haru_bgm_admin_'
 };
 </script>
-<script src="<?php echo HB_URL; ?>/assets/haru_bgm.js?ver=20260625-radiov2"></script>
+<script src="<?php echo HB_URL; ?>/assets/haru_bgm.js?ver=20260625-radiov3"></script>
 <?php
 include_once(G5_PATH.'/tail.php');
 ?>

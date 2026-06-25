@@ -24,7 +24,7 @@ unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
 $row = $hb_haru_form_row_backup;
 unset($hb_haru_form_row_backup);
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
 <div class="hb-app"><?php echo hb_nav_admin(); ?><main class="hb-app-main"><div class="hb-wrap">
 <section class="hb-page-head"><div><p class="hb-kicker">SEQUENCE</p><h1><?php echo $seq_id ? '순서표 수정' : '순서표 추가'; ?></h1><p>순서대로 눌러 진행하는 현장용 플레이리스트입니다. 파일 음악과 YouTube를 섞어 넣을 수 있습니다.</p></div><a class="hb-btn" href="<?php echo HB_URL; ?>/admin/sequence_list.php">목록으로</a></section>
 <form class="hb-card hb-form" method="post" action="<?php echo HB_URL; ?>/admin/sequence_update.php">

@@ -13,7 +13,7 @@ unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
 $block = hb_table('block');
 $res = sql_query("SELECT * FROM `{$block}` WHERE bl_scope='global' ORDER BY bl_start_time ASC, bl_id DESC");
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
 <div class="hb-app"><?php echo hb_nav_admin(); ?><main class="hb-app-main"><div class="hb-wrap">
     <section class="hb-page-head"><div><p class="hb-kicker">ADMIN</p><h1>공통 시간대 묶음</h1><p>특정 시간대 안에서 여러 음악을 순서대로 또는 랜덤으로 재생합니다.</p></div><div class="hb-actions"><a class="hb-btn" href="<?php echo HB_URL; ?>/admin/index.php">관리자 홈</a><a class="hb-btn hb-btn-primary" href="<?php echo HB_URL; ?>/admin/block_form.php">+ 공통 시간대 추가</a></div></section>
     <section class="hb-card"><div class="hb-table-wrap"><table class="hb-table"><thead><tr><th>시간대</th><th>제목</th><th>곡 수</th><th>방식</th><th>요일</th><th>기간</th><th>상태</th><th>관리</th></tr></thead><tbody>

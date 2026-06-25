@@ -12,7 +12,7 @@ if ($hb_haru_head_row_was_set) {
 unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
 $today = hb_today_operation_entries();
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
 <div class="hb-app"><?php echo hb_nav_admin(); ?><main class="hb-app-main"><div class="hb-wrap" data-hb-url="<?php echo HB_URL; ?>" data-hb-mode="admin-today">
     <section class="hb-page-head"><div><p class="hb-kicker">TODAY</p><h1>오늘 운영표</h1><p>오늘 실제 실행될 공통 시간표/시간대 묶음만 모아 봅니다. 현장 전 테스트용으로 쓰기 좋습니다.</p></div><div class="hb-actions"><a class="hb-btn hb-btn-primary" href="<?php echo HB_URL; ?>/admin/operation.php">공용 운영판</a><a class="hb-btn" href="<?php echo HB_URL; ?>/admin/index.php">관리자 홈</a></div></section>
     <section class="hb-card hb-today-board">
@@ -32,5 +32,5 @@ $today = hb_today_operation_entries();
     </section>
 </div></main></div>
 <script>window.HARU_BGM={apiLog:'<?php echo HB_URL; ?>/api_log.php',memberId:'<?php echo hb_e($member['mb_id']); ?>',mode:'admin_today',storagePrefix:'haru_bgm_admin_today_'};</script>
-<script src="<?php echo HB_URL; ?>/assets/haru_bgm.js?ver=20260625-radiov2"></script>
+<script src="<?php echo HB_URL; ?>/assets/haru_bgm.js?ver=20260625-radiov3"></script>
 <?php include_once(G5_PATH.'/tail.php'); ?>

@@ -27,7 +27,7 @@ unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
 $row = $hb_haru_form_row_backup;
 unset($hb_haru_form_row_backup);
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
 <div class="hb-app"><?php echo hb_nav_admin(); ?><main class="hb-app-main"><div class="hb-wrap">
     <section class="hb-page-head"><div><p class="hb-kicker">ADMIN</p><h1><?php echo $sc_id ? '공통 시간 수정' : '공통 시간 추가'; ?></h1><p>파일 음악과 YouTube 링크를 같이 묶어 등록할 수 있습니다. 특히 특정 시간 동안 재생 모드에서 여러 소스를 자연스럽게 이어서 쓸 수 있습니다.</p></div><a class="hb-btn" href="<?php echo HB_URL; ?>/admin/schedule_global.php">목록으로</a></section>
     <form class="hb-card hb-form" method="post" action="<?php echo HB_URL; ?>/admin/schedule_update.php">
