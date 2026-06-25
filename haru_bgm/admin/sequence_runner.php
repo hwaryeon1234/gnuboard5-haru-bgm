@@ -19,7 +19,7 @@ unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
 $row = $hb_haru_form_row_backup;
 unset($hb_haru_form_row_backup);
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov5">
 <div class="hb-app"><?php echo hb_nav_admin(); ?><main class="hb-app-main"><div class="hb-wrap hb-runner" data-hb-url="<?php echo HB_URL; ?>" data-hb-mode="sequence-runner">
 <section class="hb-page-head"><div><p class="hb-kicker">SEQUENCE RUNNER</p><h1><?php echo hb_e($row['seq_title']); ?></h1><p><?php echo hb_sequence_type_label($row['seq_type']); ?> · 담당자가 순서대로 눌러 진행하는 관리자 전용 화면입니다.</p></div><div class="hb-actions"><a class="hb-btn" href="<?php echo HB_URL; ?>/admin/sequence_list.php">순서표 목록</a><a class="hb-btn" href="<?php echo HB_URL; ?>/admin/operation.php">공용 운영판</a></div></section>
 <section class="hb-hero hb-hero-admin"><div><p class="hb-kicker">MANUAL CONTROL</p><h1>현장 진행 모드</h1><p class="hb-sub">소리는 이 브라우저에서만 나옵니다. 실수 방지 잠금을 켜면 재생 전 확인창이 뜹니다.</p><div class="hb-actions hb-operation-controls"><button type="button" class="hb-btn hb-btn-primary" id="hbEnableSound">🔊 진행판 소리 켜기</button><button type="button" class="hb-btn" id="hbStopSound">■ 전체 정지</button><label class="hb-btn hb-lock-toggle"><input type="checkbox" id="hbConfirmPlay" checked> 실수방지 확인</label></div></div><div class="hb-clock-card"><div class="hb-clock" id="hbClock">--:--:--</div><div class="hb-next-label">현재 상태</div><div class="hb-countdown" id="hbCountdown">수동 진행</div></div></section>
@@ -34,5 +34,5 @@ unset($hb_haru_form_row_backup);
 window.HARU_BGM={apiLog:'<?php echo HB_URL; ?>/api_log.php',memberId:'<?php echo hb_e($member['mb_id']); ?>',mode:'sequence_runner',storagePrefix:'haru_bgm_sequence_<?php echo (int)$seq_id; ?>_'};
 (function(){document.addEventListener('click',function(e){var b=e.target.closest('.hb-mini-play'); if(!b) return; var c=document.getElementById('hbConfirmPlay'); if(c && !c.checked) b.dataset.confirm='0'; else b.dataset.confirm='1';},true);})();
 </script>
-<script src="<?php echo HB_URL; ?>/assets/haru_bgm.js?ver=20260625-radiov3"></script>
+<script src="<?php echo HB_URL; ?>/assets/haru_bgm.js?ver=20260625-radiov5"></script>
 <?php include_once(G5_PATH.'/tail.php'); ?>

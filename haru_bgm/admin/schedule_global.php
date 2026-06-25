@@ -14,7 +14,7 @@ $schedule = hb_table('schedule');
 $music = hb_table('music');
 $res = sql_query("SELECT s.*, m.mf_title, m.mf_source, m.mf_youtube_id FROM `{$schedule}` s LEFT JOIN `{$music}` m ON s.mf_id=m.mf_id WHERE s.sc_scope='global' ORDER BY s.sc_time ASC, s.sc_id DESC");
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov5">
 <div class="hb-app"><?php echo hb_nav_admin(); ?><main class="hb-app-main"><div class="hb-wrap">
     <section class="hb-page-head"><div><p class="hb-kicker">ADMIN</p><h1>공통 시간표</h1><p>모든 로그인 회원에게 적용되는 시간표입니다.</p></div><div class="hb-actions"><a class="hb-btn" href="<?php echo HB_URL; ?>/admin/index.php">관리자 홈</a><a class="hb-btn" href="<?php echo HB_URL; ?>/admin/block_global.php">공통 시간대</a><a class="hb-btn hb-btn-primary" href="<?php echo HB_URL; ?>/admin/schedule_form.php">+ 공통 시간 추가</a></div></section>
     <section class="hb-card"><div class="hb-table-wrap"><table class="hb-table"><thead><tr><th>시간</th><th>제목</th><th>음악/YouTube</th><th>요일</th><th>기간</th><th>상태</th><th>관리</th></tr></thead><tbody>

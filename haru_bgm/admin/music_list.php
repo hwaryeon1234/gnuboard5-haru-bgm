@@ -21,7 +21,7 @@ $total_count = (int)$total['cnt'];
 $total_page = max(1, (int)ceil($total_count / $rows));
 $res = sql_query("SELECT * FROM `{$music}` ORDER BY mf_id DESC LIMIT {$from}, {$rows}");
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov5">
 <div class="hb-app"><?php echo hb_nav_admin(); ?><main class="hb-app-main"><div class="hb-wrap">
     <section class="hb-page-head">
         <div><p class="hb-kicker">ADMIN</p><h1>음악 보관함</h1><p>한 페이지에 최대 100개까지 넉넉하게 표시합니다. 파일 음악과 YouTube 링크를 같이 관리할 수 있어요.</p></div>

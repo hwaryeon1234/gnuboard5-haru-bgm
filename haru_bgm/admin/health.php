@@ -12,7 +12,7 @@ if ($hb_haru_head_row_was_set) {
 }
 unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov5">
 <div class="hb-app"><?php echo hb_nav_admin(); ?><main class="hb-app-main"><div class="hb-wrap">
     <section class="hb-page-head"><div><p class="hb-kicker">ADMIN</p><h1>설치 점검</h1><p>DB 테이블, 업로드 폴더, PHP 업로드 제한을 한 번에 확인합니다.</p></div><a class="hb-btn" href="<?php echo HB_URL; ?>/admin/index.php">관리자 홈</a></section>
     <section class="hb-card">

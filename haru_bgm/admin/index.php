@@ -26,7 +26,7 @@ $seq_cnt = sql_fetch("SELECT COUNT(*) AS cnt FROM `{$sequence}` WHERE seq_use=1"
 $disabled_cnt = sql_fetch("SELECT COUNT(*) AS cnt FROM `{$member_access}` WHERE ma_enabled=0", false);
 $today_items = hb_today_operation_entries();
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov5">
 <div class="hb-app"><?php echo hb_nav_admin(); ?><main class="hb-app-main"><div class="hb-wrap hb-admin-dashboard-wrap">
     <section class="hb-page-head hb-dashboard-hero">
         <div>

@@ -25,7 +25,7 @@ if ($hb_haru_head_row_was_set) {
 }
 unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov3">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov5">
 <div class="hb-app"><?php echo hb_nav_admin(); ?><main class="hb-app-main"><div class="hb-wrap">
     <section class="hb-page-head"><div><p class="hb-kicker">ADMIN</p><h1>회원 사용설정</h1><p>운영자가 회원별로 하루브금 회원용 기능 사용 여부를 지정합니다. 검색/필터/일괄 ON·OFF를 지원합니다.</p></div><div class="hb-actions"><a class="hb-btn" href="<?php echo HB_URL; ?>/admin/index.php">관리자 홈</a><a class="hb-btn hb-btn-primary" href="<?php echo HB_URL; ?>/admin/operation.php">공용 운영판</a></div></section>
     <section class="hb-card"><div class="hb-access-default"><div><strong>새 회원/미지정 회원 기본값</strong><p>개별 설정이 없는 회원에게 적용됩니다. 기존 흐름을 유지하려면 ON을 권장합니다.</p></div><form method="post" action="<?php echo HB_URL; ?>/admin/member_access_update.php" class="hb-checks"><input type="hidden" name="mode" value="default"><input type="hidden" name="return_url" value="<?php echo hb_e($_SERVER['REQUEST_URI']); ?>"><label><input type="radio" name="member_default_enabled" value="1" <?php echo $default_enabled ? 'checked' : ''; ?>> 기본 ON</label><label><input type="radio" name="member_default_enabled" value="0" <?php echo !$default_enabled ? 'checked' : ''; ?>> 기본 OFF</label><button type="submit" class="hb-btn hb-btn-primary">기본값 저장</button></form></div>
