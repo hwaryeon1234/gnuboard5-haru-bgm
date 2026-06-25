@@ -1,13 +1,20 @@
 <?php
 include_once('./_common.php');
 $g5['title'] = '하루브금 오늘 운영표';
+$hb_haru_head_row_was_set = array_key_exists('row', get_defined_vars());
+$hb_haru_head_row_backup = $hb_haru_head_row_was_set ? $row : null;
 include_once(G5_PATH.'/head.php');
+if ($hb_haru_head_row_was_set) {
+    $row = $hb_haru_head_row_backup;
+} else {
+    unset($row);
+}
+unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
 $today = hb_today_operation_entries();
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260616g">
-<div class="hb-wrap" data-hb-url="<?php echo HB_URL; ?>" data-hb-mode="admin-today">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
+<div class="hb-app"><?php echo hb_nav_admin(); ?><main class="hb-app-main"><div class="hb-wrap" data-hb-url="<?php echo HB_URL; ?>" data-hb-mode="admin-today">
     <section class="hb-page-head"><div><p class="hb-kicker">TODAY</p><h1>오늘 운영표</h1><p>오늘 실제 실행될 공통 시간표/시간대 묶음만 모아 봅니다. 현장 전 테스트용으로 쓰기 좋습니다.</p></div><div class="hb-actions"><a class="hb-btn hb-btn-primary" href="<?php echo HB_URL; ?>/admin/operation.php">공용 운영판</a><a class="hb-btn" href="<?php echo HB_URL; ?>/admin/index.php">관리자 홈</a></div></section>
-    <?php echo hb_nav_admin(); ?>
     <section class="hb-card hb-today-board">
         <div class="hb-card-head"><div><p class="hb-kicker"><?php echo date('Y-m-d'); ?></p><h2>오늘 실행 예정</h2></div><span class="hb-pill"><?php echo count($today); ?>개</span></div>
         <audio id="hbAudio" preload="auto" controls></audio><div class="hb-youtube-wrap" id="hbYoutubeWrap" style="display:none"><div id="hbYouTubePlayer"></div></div><div class="hb-volume-row"><label>테스트 볼륨</label><input type="range" min="0" max="100" value="80" id="hbVolume"><span id="hbVolumeText">80%</span></div>
@@ -23,7 +30,7 @@ $today = hb_today_operation_entries();
             <?php } ?>
         </div><?php } ?>
     </section>
-</div>
+</div></main></div>
 <script>window.HARU_BGM={apiLog:'<?php echo HB_URL; ?>/api_log.php',memberId:'<?php echo hb_e($member['mb_id']); ?>',mode:'admin_today',storagePrefix:'haru_bgm_admin_today_'};</script>
-<script src="<?php echo HB_URL; ?>/assets/haru_bgm.js?ver=20260616g"></script>
+<script src="<?php echo HB_URL; ?>/assets/haru_bgm.js?ver=20260625-radiov2"></script>
 <?php include_once(G5_PATH.'/tail.php'); ?>

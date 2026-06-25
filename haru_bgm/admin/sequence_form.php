@@ -11,12 +11,22 @@ if ($seq_id) {
     $row = array_merge($row, $found);
     foreach (hb_sequence_items($seq_id) as $it) { $ids[]=(int)$it['mf_id']; $titles[]=$it['siq_title']; $memos[]=$it['siq_memo']; }
 }
+$hb_haru_form_row_backup = $row;
+$hb_haru_head_row_was_set = array_key_exists('row', get_defined_vars());
+$hb_haru_head_row_backup = $hb_haru_head_row_was_set ? $row : null;
 include_once(G5_PATH.'/head.php');
+if ($hb_haru_head_row_was_set) {
+    $row = $hb_haru_head_row_backup;
+} else {
+    unset($row);
+}
+unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
+$row = $hb_haru_form_row_backup;
+unset($hb_haru_form_row_backup);
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260616g">
-<div class="hb-wrap">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
+<div class="hb-app"><?php echo hb_nav_admin(); ?><main class="hb-app-main"><div class="hb-wrap">
 <section class="hb-page-head"><div><p class="hb-kicker">SEQUENCE</p><h1><?php echo $seq_id ? '순서표 수정' : '순서표 추가'; ?></h1><p>순서대로 눌러 진행하는 현장용 플레이리스트입니다. 파일 음악과 YouTube를 섞어 넣을 수 있습니다.</p></div><a class="hb-btn" href="<?php echo HB_URL; ?>/admin/sequence_list.php">목록으로</a></section>
-<?php echo hb_nav_admin(); ?>
 <form class="hb-card hb-form" method="post" action="<?php echo HB_URL; ?>/admin/sequence_update.php">
 <input type="hidden" name="seq_id" value="<?php echo (int)$row['seq_id']; ?>">
 <div class="hb-two"><label>순서표 이름<input type="text" name="seq_title" value="<?php echo hb_e($row['seq_title']); ?>" required placeholder="예: 주일 오전예배"></label><label>구분<select name="seq_type"><option value="church" <?php echo $row['seq_type']==='church'?'selected':''; ?>>교회</option><option value="broadcast" <?php echo $row['seq_type']==='broadcast'?'selected':''; ?>>방송</option><option value="event" <?php echo $row['seq_type']==='event'?'selected':''; ?>>행사</option><option value="store" <?php echo $row['seq_type']==='store'?'selected':''; ?>>매장/학교</option><option value="general" <?php echo $row['seq_type']==='general'?'selected':''; ?>>기타</option></select></label></div>
@@ -26,5 +36,5 @@ include_once(G5_PATH.'/head.php');
 <div class="hb-two"><label>정렬값<input type="number" name="seq_sort" value="<?php echo (int)$row['seq_sort']; ?>"></label><label class="hb-inline"><input type="checkbox" name="seq_use" value="1" <?php echo $row['seq_use']?'checked':''; ?>> 사용하기</label></div>
 <div class="hb-actions"><button class="hb-btn hb-btn-primary" type="submit">저장하기</button></div>
 </form>
-</div>
+</div></main></div>
 <?php include_once(G5_PATH.'/tail.php'); ?>

@@ -9,12 +9,22 @@ if ($mf_id) {
     if (!$found) alert('음악을 찾을 수 없습니다.');
     $row = array_merge($row, $found);
 }
+$hb_haru_form_row_backup = $row;
+$hb_haru_head_row_was_set = array_key_exists('row', get_defined_vars());
+$hb_haru_head_row_backup = $hb_haru_head_row_was_set ? $row : null;
 include_once(G5_PATH.'/head.php');
+if ($hb_haru_head_row_was_set) {
+    $row = $hb_haru_head_row_backup;
+} else {
+    unset($row);
+}
+unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
+$row = $hb_haru_form_row_backup;
+unset($hb_haru_form_row_backup);
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260616e">
-<div class="hb-wrap">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
+<div class="hb-app"><?php echo hb_nav_admin(); ?><main class="hb-app-main"><div class="hb-wrap">
     <section class="hb-page-head"><div><p class="hb-kicker">ADMIN</p><h1><?php echo $mf_id ? '음악 수정' : '음악 업로드 / YouTube 등록'; ?></h1><p>파일은 드래그앤드롭으로 여러 개, YouTube 링크도 여러 줄로 한 번에 등록할 수 있습니다.</p></div><a class="hb-btn" href="<?php echo HB_URL; ?>/admin/music_list.php">목록으로</a></section>
-    <?php echo hb_nav_admin(); ?>
     <form class="hb-card hb-form" method="post" action="<?php echo HB_URL; ?>/admin/music_update.php" enctype="multipart/form-data">
         <input type="hidden" name="mf_id" value="<?php echo (int)$row['mf_id']; ?>">
         <label>등록 방식
@@ -59,7 +69,7 @@ https://www.youtube.com/watch?v=...
         <label class="hb-inline"><input type="checkbox" name="mf_use" value="1" <?php echo $row['mf_use'] ? 'checked' : ''; ?>> 사용하기</label>
         <div class="hb-actions"><button class="hb-btn hb-btn-primary" type="submit">저장하기</button></div>
     </form>
-</div>
+</div></main></div>
 <script>
 (function(){
     const sel = document.getElementById('hbMusicSource');

@@ -1,7 +1,15 @@
 <?php
 include_once('./_common.php');
 $g5['title'] = '하루브금 음악 관리';
+$hb_haru_head_row_was_set = array_key_exists('row', get_defined_vars());
+$hb_haru_head_row_backup = $hb_haru_head_row_was_set ? $row : null;
 include_once(G5_PATH.'/head.php');
+if ($hb_haru_head_row_was_set) {
+    $row = $hb_haru_head_row_backup;
+} else {
+    unset($row);
+}
+unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
 $music = hb_table('music');
 $schedule = hb_table('schedule');
 $block_item = hb_table('block_item');
@@ -13,13 +21,12 @@ $total_count = (int)$total['cnt'];
 $total_page = max(1, (int)ceil($total_count / $rows));
 $res = sql_query("SELECT * FROM `{$music}` ORDER BY mf_id DESC LIMIT {$from}, {$rows}");
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260616e">
-<div class="hb-wrap">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
+<div class="hb-app"><?php echo hb_nav_admin(); ?><main class="hb-app-main"><div class="hb-wrap">
     <section class="hb-page-head">
         <div><p class="hb-kicker">ADMIN</p><h1>음악 보관함</h1><p>한 페이지에 최대 100개까지 넉넉하게 표시합니다. 파일 음악과 YouTube 링크를 같이 관리할 수 있어요.</p></div>
         <div class="hb-actions"><a class="hb-btn" href="<?php echo HB_URL; ?>/admin/index.php">관리자 홈</a><a class="hb-btn hb-btn-primary" href="<?php echo HB_URL; ?>/admin/music_form.php">+ 음악 등록</a></div>
     </section>
-    <?php echo hb_nav_admin(); ?>
     <section class="hb-card">
         <div class="hb-card-head"><div><p class="hb-kicker">LIBRARY</p><h2>등록 음악 <?php echo number_format($total_count); ?>개</h2></div><span class="hb-pill">page <?php echo $page; ?> / <?php echo $total_page; ?></span></div>
         <div class="hb-table-wrap">
@@ -46,5 +53,5 @@ $res = sql_query("SELECT * FROM `{$music}` ORDER BY mf_id DESC LIMIT {$from}, {$
         </div>
         <?php if ($total_page > 1) { ?><div class="hb-actions hb-pager"><?php if ($page > 1) { ?><a class="hb-btn" href="?page=<?php echo $page-1; ?>">이전</a><?php } ?><span class="hb-muted">100개씩 표시 중</span><?php if ($page < $total_page) { ?><a class="hb-btn" href="?page=<?php echo $page+1; ?>">다음</a><?php } ?></div><?php } ?>
     </section>
-</div>
+</div></main></div>
 <?php include_once(G5_PATH.'/tail.php'); ?>

@@ -14,12 +14,22 @@ $schedule_item_ids = $sc_id ? hb_schedule_item_ids($sc_id) : array();
 if (!$schedule_item_ids && (int)$row['mf_id'] > 0) $schedule_item_ids = array((int)$row['mf_id']);
 $extra_ids = $schedule_item_ids;
 if ($extra_ids) array_shift($extra_ids);
+$hb_haru_form_row_backup = $row;
+$hb_haru_head_row_was_set = array_key_exists('row', get_defined_vars());
+$hb_haru_head_row_backup = $hb_haru_head_row_was_set ? $row : null;
 include_once(G5_PATH.'/head.php');
+if ($hb_haru_head_row_was_set) {
+    $row = $hb_haru_head_row_backup;
+} else {
+    unset($row);
+}
+unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
+$row = $hb_haru_form_row_backup;
+unset($hb_haru_form_row_backup);
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260616e">
-<div class="hb-wrap">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
+<div class="hb-app"><?php echo hb_nav_admin(); ?><main class="hb-app-main"><div class="hb-wrap">
     <section class="hb-page-head"><div><p class="hb-kicker">ADMIN</p><h1><?php echo $sc_id ? '공통 시간 수정' : '공통 시간 추가'; ?></h1><p>파일 음악과 YouTube 링크를 같이 묶어 등록할 수 있습니다. 특히 특정 시간 동안 재생 모드에서 여러 소스를 자연스럽게 이어서 쓸 수 있습니다.</p></div><a class="hb-btn" href="<?php echo HB_URL; ?>/admin/schedule_global.php">목록으로</a></section>
-    <?php echo hb_nav_admin(); ?>
     <form class="hb-card hb-form" method="post" action="<?php echo HB_URL; ?>/admin/schedule_update.php">
         <input type="hidden" name="sc_id" value="<?php echo (int)$row['sc_id']; ?>">
         <label>제목<input type="text" name="sc_title" value="<?php echo hb_e($row['sc_title']); ?>" placeholder="예: 점심시간 알림 / 예배 전 묵상 BGM" required></label>
@@ -63,7 +73,7 @@ https://www.youtube.com/watch?v=..."></textarea>
         <label class="hb-inline"><input type="checkbox" name="sc_use" value="1" <?php echo $row['sc_use'] ? 'checked' : ''; ?>> 사용하기</label>
         <div class="hb-actions"><button class="hb-btn hb-btn-primary" type="submit">저장하기</button></div>
     </form>
-</div>
+</div></main></div>
 <script>
 (function(){
     const mode = document.getElementById('hbSchedulePlayMode');
@@ -73,8 +83,7 @@ https://www.youtube.com/watch?v=..."></textarea>
     const area = document.getElementById('hbScheduleYoutubeBulk');
     const drop = document.getElementById('hbScheduleYoutubeDropzone');
     const status = document.getElementById('hbScheduleYoutubeStatus');
-    function appendText(text){ if(!area || !text) return; const old = area.value.trim(); area.value = old ? old + '
-' + text.trim() : text.trim(); if(status) status.textContent = '링크가 추가되었습니다.'; }
+    function appendText(text){ if(!area || !text) return; const old = area.value.trim(); area.value = old ? old + '\n' + text.trim() : text.trim(); if(status) status.textContent = '링크가 추가되었습니다.'; }
     if(drop && area){
         drop.addEventListener('click', () => area.focus());
         ['dragenter','dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('is-drag'); }));

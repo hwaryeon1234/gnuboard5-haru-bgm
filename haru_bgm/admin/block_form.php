@@ -12,10 +12,21 @@ if ($bl_id) {
     foreach (hb_block_items($bl_id) as $item) $selected_ids[] = (int)$item['mf_id'];
 }
 $days_selected = array_filter(explode(',', $row['bl_days']), 'strlen');
+$hb_haru_form_row_backup = $row;
+$hb_haru_head_row_was_set = array_key_exists('row', get_defined_vars());
+$hb_haru_head_row_backup = $hb_haru_head_row_was_set ? $row : null;
 include_once(G5_PATH.'/head.php');
+if ($hb_haru_head_row_was_set) {
+    $row = $hb_haru_head_row_backup;
+} else {
+    unset($row);
+}
+unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
+$row = $hb_haru_form_row_backup;
+unset($hb_haru_form_row_backup);
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260616e">
-<div class="hb-wrap">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
+<div class="hb-app"><?php echo hb_nav_admin(); ?><main class="hb-app-main"><div class="hb-wrap">
     <section class="hb-page-head"><div><p class="hb-kicker">ADMIN</p><h1><?php echo $bl_id ? '공통 시간대 수정' : '공통 시간대 추가'; ?></h1><p>정해진 시간 안에서 여러 곡을 이어서 재생합니다.</p></div><a class="hb-btn" href="<?php echo HB_URL; ?>/admin/block_global.php">목록으로</a></section>
     <form class="hb-card hb-form" method="post" action="<?php echo HB_URL; ?>/admin/block_update.php">
         <input type="hidden" name="bl_id" value="<?php echo (int)$row['bl_id']; ?>">
@@ -41,7 +52,7 @@ https://www.youtube.com/watch?v=..."></textarea>
         <label class="hb-inline"><input type="checkbox" name="bl_use" value="1" <?php echo $row['bl_use'] ? 'checked' : ''; ?>> 사용하기</label>
         <div class="hb-actions"><button class="hb-btn hb-btn-primary" type="submit">저장하기</button></div>
     </form>
-</div>
+</div></main></div>
 <script>
 (function(){
     const area = document.getElementById('hbBlockYoutubeBulk');

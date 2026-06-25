@@ -1,12 +1,20 @@
 <?php
 include_once('./_common.php');
 $g5['title'] = '하루브금 공통 시간대';
+$hb_haru_head_row_was_set = array_key_exists('row', get_defined_vars());
+$hb_haru_head_row_backup = $hb_haru_head_row_was_set ? $row : null;
 include_once(G5_PATH.'/head.php');
+if ($hb_haru_head_row_was_set) {
+    $row = $hb_haru_head_row_backup;
+} else {
+    unset($row);
+}
+unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
 $block = hb_table('block');
 $res = sql_query("SELECT * FROM `{$block}` WHERE bl_scope='global' ORDER BY bl_start_time ASC, bl_id DESC");
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260615c">
-<div class="hb-wrap">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
+<div class="hb-app"><?php echo hb_nav_admin(); ?><main class="hb-app-main"><div class="hb-wrap">
     <section class="hb-page-head"><div><p class="hb-kicker">ADMIN</p><h1>공통 시간대 묶음</h1><p>특정 시간대 안에서 여러 음악을 순서대로 또는 랜덤으로 재생합니다.</p></div><div class="hb-actions"><a class="hb-btn" href="<?php echo HB_URL; ?>/admin/index.php">관리자 홈</a><a class="hb-btn hb-btn-primary" href="<?php echo HB_URL; ?>/admin/block_form.php">+ 공통 시간대 추가</a></div></section>
     <section class="hb-card"><div class="hb-table-wrap"><table class="hb-table"><thead><tr><th>시간대</th><th>제목</th><th>곡 수</th><th>방식</th><th>요일</th><th>기간</th><th>상태</th><th>관리</th></tr></thead><tbody>
     <?php for ($i=0; $row=sql_fetch_array($res); $i++) { $cnt = hb_block_item_count($row['bl_id']); ?>
@@ -22,5 +30,5 @@ $res = sql_query("SELECT * FROM `{$block}` WHERE bl_scope='global' ORDER BY bl_s
         </tr>
     <?php } if ($i === 0) { ?><tr><td colspan="8"><div class="hb-empty"><div class="hb-empty-icon">🎼</div><strong>공통 시간대 묶음이 없습니다</strong><p>예: 10:00~11:00 안에 여러 곡을 넣어 매장/교회/방송 BGM처럼 사용할 수 있어요.</p></div></td></tr><?php } ?>
     </tbody></table></div></section>
-</div>
+</div></main></div>
 <?php include_once(G5_PATH.'/tail.php'); ?>
