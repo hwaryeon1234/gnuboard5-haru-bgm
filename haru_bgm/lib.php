@@ -867,8 +867,16 @@ function hb_require_member_bgm_enabled() {
         hb_json_exit(array('ok'=>false, 'message'=>'member_bgm_disabled', 'notice'=>'운영자가 이 계정의 하루브금 회원용 사용을 꺼두었습니다.'));
     }
     $g5['title'] = '하루브금 사용 제한';
-    include_once(G5_PATH.'/head.php');
-    echo '<link rel="stylesheet" href="'.HB_URL.'/assets/haru_bgm.css?ver=20260616f">';
+    $hb_haru_head_row_was_set = array_key_exists('row', get_defined_vars());
+$hb_haru_head_row_backup = $hb_haru_head_row_was_set ? $row : null;
+include_once(G5_PATH.'/head.php');
+if ($hb_haru_head_row_was_set) {
+    $row = $hb_haru_head_row_backup;
+} else {
+    unset($row);
+}
+unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
+    echo '<link rel="stylesheet" href="'.HB_URL.'/assets/haru_bgm.css?ver=20260625-radiov2">';
     echo '<div class="hb-wrap"><section class="hb-card hb-empty"><div class="hb-empty-icon">🔒</div><strong>하루브금 사용이 꺼져 있습니다</strong><p>이 계정은 운영자 설정에 따라 회원용 하루브금 화면을 사용할 수 없습니다.</p><p class="hb-muted-mini">필요하면 사이트 운영자에게 사용 허용을 요청하세요.</p><div class="hb-actions hb-actions-center"><a class="hb-btn" href="'.G5_URL.'">사이트 홈으로</a></div></section></div>';
     include_once(G5_PATH.'/tail.php');
     exit;
@@ -998,22 +1006,80 @@ function hb_health_checks() {
     return $checks;
 }
 
-function hb_nav_admin() {
+function hb_nav_admin_items() {
+    if (!defined('HB_URL')) return array();
+    return array(
+        array('group' => 'BGM 관리', 'label' => '음악 관리', 'icon' => 'music', 'url' => HB_URL.'/admin/music_list.php', 'match' => array('/admin/music_list.php','/admin/music_form.php')),
+        array('group' => 'BGM 관리', 'label' => '공통 시간표', 'icon' => 'calendar', 'url' => HB_URL.'/admin/schedule_global.php', 'match' => array('/admin/schedule_global.php','/admin/schedule_form.php')),
+        array('group' => 'BGM 관리', 'label' => '공통 시간대', 'icon' => 'layers', 'url' => HB_URL.'/admin/block_global.php', 'match' => array('/admin/block_global.php','/admin/block_form.php')),
+        array('group' => 'BGM 관리', 'label' => '순서표 모드', 'icon' => 'list', 'url' => HB_URL.'/admin/sequence_list.php', 'match' => array('/admin/sequence_list.php','/admin/sequence_form.php','/admin/sequence_runner.php')),
+
+        array('group' => '방송 관리', 'label' => '공용 운영판', 'icon' => 'broadcast', 'url' => HB_URL.'/admin/operation.php', 'match' => array('/admin/operation.php')),
+        array('group' => '방송 관리', 'label' => '오늘 운영표', 'icon' => 'clock', 'url' => HB_URL.'/admin/today.php', 'match' => array('/admin/today.php')),
+        array('group' => '방송 관리', 'label' => '회원 사용설정', 'icon' => 'users', 'url' => HB_URL.'/admin/member_access.php', 'match' => array('/admin/member_access.php')),
+        array('group' => '방송 관리', 'label' => '재생 로그', 'icon' => 'log', 'url' => HB_URL.'/admin/logs.php', 'match' => array('/admin/logs.php')),
+
+        array('group' => '시스템', 'label' => '환경설정', 'icon' => 'settings', 'url' => HB_URL.'/admin/settings.php', 'match' => array('/admin/settings.php')),
+        array('group' => '시스템', 'label' => '설치 점검', 'icon' => 'check', 'url' => HB_URL.'/admin/health.php', 'match' => array('/admin/health.php')),
+        array('group' => '시스템', 'label' => '모드 선택', 'icon' => 'switch', 'url' => HB_URL.'/index.php', 'match' => array('/haru_bgm/index.php'), 'mode_root' => true),
+    );
+}
+
+function hb_nav_icon_svg($name) {
+    $icons = array(
+        'music'     => '<path d="M9 17V4l10-1v13"/><circle cx="6" cy="17" r="3"/><circle cx="16" cy="16" r="3"/>',
+        'calendar'  => '<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>',
+        'layers'    => '<path d="M12 2 2 7l10 5 10-5z"/><path d="M2 12l10 5 10-5"/><path d="M2 17l10 5 10-5"/>',
+        'list'      => '<path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/>',
+        'broadcast' => '<path d="M12 2v6"/><circle cx="12" cy="13" r="3"/><path d="M5.5 9.5a9 9 0 0 1 13 0M2.5 6.5a13 13 0 0 1 19 0"/>',
+        'clock'     => '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>',
+        'users'     => '<circle cx="9" cy="8" r="3.2"/><path d="M2.5 19c0-3.3 2.9-6 6.5-6s6.5 2.7 6.5 6"/><path d="M16.5 4.6a3.2 3.2 0 0 1 0 6.3"/><path d="M19 13.3c2 .6 3.5 2.7 3.5 5.2"/>',
+        'log'       => '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',
+        'settings'  => '<circle cx="12" cy="12" r="3"/><path d="M19.4 13a7.7 7.7 0 0 0 0-2l2-1.6-2-3.4-2.4 1a7.5 7.5 0 0 0-1.7-1L15 3h-6l-.3 2.6a7.5 7.5 0 0 0-1.7 1l-2.4-1-2 3.4L4.6 11a7.7 7.7 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7.5 7.5 0 0 0 1.7 1L9 21h6l.3-2.6a7.5 7.5 0 0 0 1.7-1l2.4 1 2-3.4z"/>',
+        'check'     => '<circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9"/>',
+        'switch'    => '<path d="M7 16V4M4 7l3-3 3 3"/><path d="M17 8v12M14 17l3 3 3-3"/>',
+        'home'      => '<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',
+    );
+    return isset($icons[$name]) ? $icons[$name] : '';
+}
+
+function hb_nav_admin($active_group = null) {
     if (!defined('HB_URL')) return '';
-    return '<div class="hb-subnav">'
-        .'<a href="'.HB_URL.'/index.php">모드 선택</a>'
-        .'<a href="'.HB_URL.'/admin/index.php">관리자 홈</a>'
-        .'<a href="'.HB_URL.'/admin/operation.php">공용 운영판</a>'
-        .'<a href="'.HB_URL.'/admin/today.php">오늘 운영표</a>'
-        .'<a href="'.HB_URL.'/admin/sequence_list.php">순서표 모드</a>'
-        .'<a href="'.HB_URL.'/admin/music_list.php">음악 관리</a>'
-        .'<a href="'.HB_URL.'/admin/schedule_global.php">공통 시간표</a>'
-        .'<a href="'.HB_URL.'/admin/block_global.php">공통 시간대</a>'
-        .'<a href="'.HB_URL.'/admin/member_access.php">회원 사용설정</a>'
-        .'<a href="'.HB_URL.'/admin/logs.php">재생 로그</a>'
-        .'<a href="'.HB_URL.'/admin/settings.php">환경설정</a>'
-        .'<a href="'.HB_URL.'/admin/health.php">설치 점검</a>'
-        .'</div>';
+    $current_script = isset($_SERVER['SCRIPT_NAME']) ? str_replace('\\', '/', $_SERVER['SCRIPT_NAME']) : '';
+    $items = hb_nav_admin_items();
+    $groups = array();
+    foreach ($items as $item) {
+        $groups[$item['group']][] = $item;
+    }
+
+    $dash_active = (strpos($current_script, '/admin/index.php') !== false);
+
+    $html = '<aside class="hb-side" aria-label="하루브금 관리자 메뉴">';
+    $html .= '<div class="hb-side-brand"><span class="hb-side-brand-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'.hb_nav_icon_svg('broadcast').'</svg></span><span>하루BGM <b>관리자</b></span></div>';
+    $html .= '<nav class="hb-side-nav">';
+    $html .= '<a class="hb-side-link'.($dash_active ? ' is-active' : '').'" href="'.HB_URL.'/admin/index.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'.hb_nav_icon_svg('home').'</svg><span>대시보드</span></a>';
+    foreach ($groups as $group_name => $group_items) {
+        $html .= '<p class="hb-side-group">'.hb_e($group_name).'</p>';
+        foreach ($group_items as $item) {
+            $is_active = false;
+            if (!empty($item['mode_root'])) {
+                $is_active = (strpos($current_script, '/admin/') === false && substr($current_script, -10) === '/index.php');
+            } else {
+                foreach ($item['match'] as $match_path) {
+                    if ($match_path !== '' && substr($current_script, -strlen($match_path)) === $match_path) {
+                        $is_active = true;
+                        break;
+                    }
+                }
+            }
+            $html .= '<a class="hb-side-link'.($is_active ? ' is-active' : '').'" href="'.$item['url'].'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'.hb_nav_icon_svg($item['icon']).'</svg><span>'.hb_e($item['label']).'</span></a>';
+        }
+    }
+    $html .= '</nav>';
+    $html .= '<div class="hb-side-foot"><a href="'.G5_URL.'">사이트로 돌아가기</a></div>';
+    $html .= '</aside>';
+    $html .= '<script>(function(){var b=document.body;if(b&&!b.dataset.hbAppLock){b.dataset.hbAppLock="1";b.style.overflow="hidden";}})();</script>';
+    return $html;
 }
 
 function hb_goto($url) {

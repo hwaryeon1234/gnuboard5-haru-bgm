@@ -2,7 +2,15 @@
 include_once('./_common.php');
 hb_require_member_bgm_enabled();
 $g5['title'] = '하루브금 모드 선택';
+$hb_haru_head_row_was_set = array_key_exists('row', get_defined_vars());
+$hb_haru_head_row_backup = $hb_haru_head_row_was_set ? $row : null;
 include_once(G5_PATH.'/head.php');
+if ($hb_haru_head_row_was_set) {
+    $row = $hb_haru_head_row_backup;
+} else {
+    unset($row);
+}
+unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
 
 $music = hb_table('music');
 $schedule = hb_table('schedule');
@@ -13,9 +21,9 @@ $user_cnt = sql_fetch("SELECT COUNT(*) AS cnt FROM `{$schedule}` WHERE sc_scope=
 $block_global_cnt = sql_fetch("SELECT COUNT(*) AS cnt FROM `{$block}` WHERE bl_scope='global' AND bl_use=1", false);
 $block_user_cnt = sql_fetch("SELECT COUNT(*) AS cnt FROM `{$block}` WHERE bl_scope='user' AND mb_id='".hb_escape($member['mb_id'])."' AND bl_use=1", false);
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260616e">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
 
-<div class="hb-wrap hb-mode-wrap">
+<div class="hb-wrap hb-radio hb-mode-wrap">
     <section class="hb-hero hb-mode-hero">
         <div>
             <p class="hb-kicker">MODE SELECT</p>

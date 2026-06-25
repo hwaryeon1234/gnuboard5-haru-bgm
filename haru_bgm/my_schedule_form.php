@@ -17,10 +17,21 @@ $schedule_item_ids = $sc_id ? hb_schedule_item_ids($sc_id) : array();
 if (!$schedule_item_ids && (int)$row['mf_id'] > 0) $schedule_item_ids = array((int)$row['mf_id']);
 $extra_ids = $schedule_item_ids;
 if ($extra_ids) array_shift($extra_ids);
+$hb_haru_form_row_backup = $row;
+$hb_haru_head_row_was_set = array_key_exists('row', get_defined_vars());
+$hb_haru_head_row_backup = $hb_haru_head_row_was_set ? $row : null;
 include_once(G5_PATH.'/head.php');
+if ($hb_haru_head_row_was_set) {
+    $row = $hb_haru_head_row_backup;
+} else {
+    unset($row);
+}
+unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
+$row = $hb_haru_form_row_backup;
+unset($hb_haru_form_row_backup);
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260616e">
-<div class="hb-wrap">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
+<div class="hb-wrap hb-radio">
     <section class="hb-page-head">
         <div>
             <p class="hb-kicker">MY ROUTINE</p>
@@ -94,8 +105,7 @@ https://www.youtube.com/watch?v=..."></textarea>
     const area = document.getElementById('hbScheduleYoutubeBulk');
     const drop = document.getElementById('hbScheduleYoutubeDropzone');
     const status = document.getElementById('hbScheduleYoutubeStatus');
-    function appendText(text){ if(!area || !text) return; const old = area.value.trim(); area.value = old ? old + '
-' + text.trim() : text.trim(); if(status) status.textContent = '링크가 추가되었습니다.'; }
+    function appendText(text){ if(!area || !text) return; const old = area.value.trim(); area.value = old ? old + '\n' + text.trim() : text.trim(); if(status) status.textContent = '링크가 추가되었습니다.'; }
     if(drop && area){
         drop.addEventListener('click', () => area.focus());
         ['dragenter','dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('is-drag'); }));

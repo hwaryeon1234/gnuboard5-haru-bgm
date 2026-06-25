@@ -2,15 +2,23 @@
 include_once('./_common.php');
 hb_require_member_bgm_enabled();
 $g5['title'] = '내 하루브금 시간표';
+$hb_haru_head_row_was_set = array_key_exists('row', get_defined_vars());
+$hb_haru_head_row_backup = $hb_haru_head_row_was_set ? $row : null;
 include_once(G5_PATH.'/head.php');
+if ($hb_haru_head_row_was_set) {
+    $row = $hb_haru_head_row_backup;
+} else {
+    unset($row);
+}
+unset($hb_haru_head_row_was_set, $hb_haru_head_row_backup);
 
 $schedule = hb_table('schedule');
 $music = hb_table('music');
 $mb_id = hb_escape($member['mb_id']);
 $res = sql_query("SELECT s.*, m.mf_title FROM `{$schedule}` s LEFT JOIN `{$music}` m ON s.mf_id = m.mf_id WHERE s.sc_scope='user' AND s.mb_id='{$mb_id}' ORDER BY s.sc_time ASC, s.sc_id DESC");
 ?>
-<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260616e">
-<div class="hb-wrap">
+<link rel="stylesheet" href="<?php echo HB_URL; ?>/assets/haru_bgm.css?ver=20260625-radiov2">
+<div class="hb-wrap hb-radio">
     <section class="hb-page-head">
         <div>
             <p class="hb-kicker">MY ROUTINE</p>
